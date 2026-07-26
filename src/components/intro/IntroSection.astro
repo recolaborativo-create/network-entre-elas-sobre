@@ -1,0 +1,109 @@
+---
+import StatCounter from '../stats/StatCounter.astro'
+import { event } from '../../data/event'
+---
+<section class="intro" data-reveal>
+  <div class="intro-inner">
+    <p class="intro-text">
+      {event.description}
+    </p>
+
+    <div class="intro-stats">
+      {event.stats.map(s => (
+        <StatCounter target={s.target} label={s.label} suffix={s.suffix} />
+      ))}
+    </div>
+
+    <div class="intro-pillars">
+      {event.pillars.map((p, i) => (
+        <article class="pillar" style={`--i: ${i}`}>
+          <span class="pillar-num">0{i + 1}</span>
+          <h3>{p.title}</h3>
+          <p>{p.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+.intro {
+  padding: var(--space-24) var(--space-6);
+  /* Funde com o azul do hero antes de virar branco sólido — evita a quebra dura de cor.
+     A distância do 2º stop precisa ficar abaixo do padding-top (mobile inclusive,
+     ver @media abaixo) pra nunca sobrepor o texto (que é azul escuro) com fundo escuro. */
+  background: linear-gradient(180deg, var(--rec-blue) 0%, var(--surface) 48px);
+}
+.intro-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.intro-text {
+  max-width: 780px;
+  margin: 0 auto var(--space-20);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.intro-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-24);
+  margin-bottom: var(--space-20);
+}
+.intro-stats :global(.stat-counter) { text-align: center; }
+.intro-stats :global(.stat-value) { font-size: clamp(3rem, 8vw, 5rem); color: var(--rec-blue); }
+.intro-stats :global(.stat-label) { font-size: var(--type-small); letter-spacing: 0.12em; }
+
+.intro-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+.pillar {
+  background: var(--surface-raised);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-9) var(--space-7);
+  position: relative;
+}
+.pillar-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent);
+  opacity: 0.55;
+  margin-bottom: var(--space-4);
+}
+.pillar h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.01em;
+}
+.pillar p {
+  font-size: var(--type-small);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .intro-stats { gap: var(--space-14); }
+  .intro-pillars { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .intro { padding: var(--space-16) var(--space-4); }
+  .intro-text { margin-bottom: var(--space-12); }
+  .intro-stats { gap: var(--space-10); margin-bottom: var(--space-12); }
+  .pillar { padding: var(--space-7) var(--space-6); }
+}
+</style>

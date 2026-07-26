@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import EventHero from '../components/hero/EventHero.astro'
+import IntroSection from '../components/intro/IntroSection.astro'
+import MinimalFooter from '../components/footer/MinimalFooter.astro'
+import { event } from '../data/event'
+
+const whatsappHref = `https://wa.me/5551984632545?text=${encodeURIComponent('Olá, gostaria de saber mais sobre o Network Entre Elas.')}`
+
+const howItWorks = [
+  'Sem palestras, painéis ou workshops. O foco é 100% conexão e negociação direta.',
+  'Vagas para mais de 200 mulheres, de todos os segmentos e cidades.',
+  'Todas as participantes sobem ao palco e apresentam o próprio negócio: pitch de 30 segundos (ou 1 minuto para patrocinadoras).',
+  'Grupo de negócios fechado com as participantes, pra manter contato depois do evento.',
+  'Evento segmentado por ramo de atuação e cidade, pra facilitar parcerias reais.',
+  'Cotas de divulgação disponíveis para dar mais visibilidade ao seu negócio.',
+]
+---
+<BaseLayout
+  title={`${event.name} · Saiba mais`}
+  description={event.description}
+>
+  <main class="sobre">
+    <div class="bg-motif" aria-hidden="true"></div>
+
+    <EventHero ctaHref={whatsappHref} ctaLabel="Falar no WhatsApp" note="" />
+    <IntroSection />
+
+    <section class="how" data-reveal>
+      <svg class="motif motif-nodes" aria-hidden="true" viewBox="0 0 120 120" fill="none">
+        <circle cx="20" cy="30" r="3" fill="currentColor"/>
+        <circle cx="70" cy="15" r="3" fill="currentColor"/>
+        <circle cx="95" cy="55" r="3" fill="currentColor"/>
+        <circle cx="45" cy="70" r="3" fill="currentColor"/>
+        <path d="M20 30 L70 15 M70 15 L95 55 M95 55 L45 70 M45 70 L20 30 M20 30 L95 55" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <div class="how-inner">
+        <span class="how-eyebrow">como funciona</span>
+        <h2 class="how-title">Um encontro pensado pra gerar negócio, não pra assistir palestra</h2>
+        <div class="how-grid">
+          {howItWorks.map((item, i) => (
+            <article class="how-card" style={`--i: ${i}`}>
+              <span class="how-card-num">0{i + 1}</span>
+              <p>{item}</p>
+            </article>
+          ))}
+        </div>
+        <p class="how-note">Quem já está no grupo de pré-inscrição garante valor promocional.</p>
+      </div>
+    </section>
+
+    <section class="info" data-reveal>
+      <svg class="motif motif-pin" aria-hidden="true" viewBox="0 0 100 100" fill="none">
+        <path d="M50 10c-14 0-25 11-25 25 0 18 25 45 25 45s25-27 25-45c0-14-11-25-25-25z" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="50" cy="35" r="8" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <svg class="motif motif-spark" aria-hidden="true" viewBox="0 0 60 60" fill="none">
+        <path d="M30 4 L34 26 L56 30 L34 34 L30 56 L26 34 L4 30 L26 26 Z" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <div class="info-inner">
+        <span class="info-eyebrow">informações do evento</span>
+        <h2 class="info-title">Tudo o que você precisa saber</h2>
+        <dl class="info-list">
+          {event.practicalInfo.items.map(item => (
+            <div class="info-row">
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <a class="info-cta" href={whatsappHref} target="_blank" rel="noopener">
+          Quero saber como participar <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <MinimalFooter />
+</BaseLayout>
+
+<style>
+/* Reskin azul-escuro só desta página — redefine os tokens semânticos em
+   :global(body) (não em .sobre) porque o Footer é irmão do <main>, fora da
+   árvore do componente; só assim ele também herda as cores escuras (senão o
+   gradiente do rodapé continua claro, puxando do --surface branco padrão). */
+:global(body) {
+  --surface:        #012659;
+  --surface-2:      #02377A;
+  --surface-3:      rgba(255,255,255,0.06);
+  --surface-raised: #0A2F66;
+  --text:        #FFFFFF;
+  --text-strong: #FFFFFF;
+  --text-muted:  rgba(255,255,255,0.72);
+  --text-soft:   rgba(255,255,255,0.50);
+  --border-soft: rgba(255,255,255,0.10);
+  --shadow-sm: 0 3px 8px rgba(0,0,0,0.25);
+}
+.sobre {
+  position: relative;
+  background: var(--surface);
+}
+/* Transição leve entre o hero (foto) e a seção seguinte — um azul um pouco
+   mais claro no topo (--surface-2) esmaecendo pro azul escuro sólido. */
+.sobre :global(.intro) {
+  background: linear-gradient(180deg, #02377A 0%, var(--surface) 320px);
+}
+
+/* Motivo decorativo de fundo — pontos + linhas soltas sugerindo "rede/conexão",
+   fixo atrás de todas as seções (exceto o hero, que já tem a foto). */
+.bg-motif {
+  position: absolute;
+  inset: 0;
+  top: 100vh;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(0,161,152,0.18) 0%, transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(0,161,152,0.14) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(2,55,122,0.5) 0%, transparent 50%),
+    radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px);
+  background-size: auto, auto, auto, 34px 34px;
+}
+.sobre :global(.hero),
+.sobre :global(.intro),
+.sobre .how,
+.sobre .info {
+  position: relative;
+  z-index: 1;
+}
+
+/* IntroSection/EventHero são componentes compartilhados — ajustes pontuais
+   só valem dentro desta página via :global(). */
+.sobre :global(.hero-inner) { max-width: 1080px; }
+.sobre :global(.hero-title) { font-size: clamp(2.1rem, 5.4vw, 3.6rem); margin-bottom: var(--space-12); }
+.sobre :global(.intro-stats .stat-value) { color: #fff; text-shadow: 0 0 28px rgba(0,161,152,0.45); }
+.sobre :global(.intro-stats .stat-label) { color: var(--text-muted); }
+.sobre :global(.pillar) {
+  background: var(--surface-3);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-soft);
+  border-top: 2px solid var(--rec-teal);
+  box-shadow: none;
+  padding: var(--space-10) var(--space-8);
+}
+.sobre :global(.pillar-num) { font-size: 1.6rem; opacity: 1; }
+
+/* Motivos decorativos — pequenos desenhos em SVG (line art), soltos ao fundo
+   de cada seção, remetendo a rede/conexão/evento. Sutis de propósito. */
+.motif {
+  position: absolute;
+  color: var(--rec-teal);
+  opacity: 0.16;
+  pointer-events: none;
+}
+.motif-nodes { top: var(--space-10); right: var(--space-10); width: 110px; height: 110px; }
+.motif-pin { top: var(--space-9); left: var(--space-8); width: 70px; height: 70px; opacity: 0.14; }
+.motif-spark { bottom: var(--space-12); right: 12%; width: 40px; height: 40px; opacity: 0.2; }
+
+@media (max-width: 640px) {
+  .motif-nodes, .motif-pin { display: none; }
+}
+
+.how {
+  position: relative;
+  padding: var(--space-20) var(--space-6);
+}
+.how-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.how-eyebrow {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: var(--type-micro);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-4);
+}
+.how-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: var(--space-9);
+  letter-spacing: -0.01em;
+}
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  text-align: left;
+  margin-bottom: var(--space-9);
+}
+.how-card {
+  background: var(--surface-3);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-soft);
+  border-top: 2px solid var(--rec-teal);
+  border-radius: 18px;
+  padding: var(--space-8) var(--space-7);
+}
+.how-card-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent);
+  margin-bottom: var(--space-4);
+}
+.how-card p {
+  font-size: var(--type-small);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.how-note {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--type-small);
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .how-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .how { padding: var(--space-14) var(--space-4); }
+  .how-grid { grid-template-columns: 1fr; gap: var(--space-4); }
+  .how-card { padding: var(--space-6); }
+}
+
+/* "Informações do encontro" — mesmo recorte visual da lista de informações
+   já usada na página de inscrição (EventDetailsForm.astro): uma única caixa
+   com borda, cada linha com o próprio respiro (não é grid de cards). */
+.info {
+  padding: var(--space-24) var(--space-6) var(--space-20);
+}
+.info-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+.info-eyebrow {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--type-micro);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-3);
+}
+.info-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  color: var(--text);
+  margin-bottom: var(--space-10);
+  letter-spacing: -0.01em;
+}
+.info-list {
+  margin: 0 0 var(--space-10);
+  text-align: left;
+  background: var(--surface-3);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-7);
+  border-bottom: 1px solid var(--border-soft);
+}
+.info-row:last-child { border-bottom: none; }
+.info-row dt {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--type-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  flex-shrink: 0;
+}
+.info-row dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--text);
+  text-align: right;
+}
+.info-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--rec-teal);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  padding: 18px 36px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-fast) var(--easing), box-shadow var(--motion-fast) var(--easing);
+}
+.info-cta:hover { transform: translateY(-2px); }
+
+@media (max-width: 640px) {
+  .info { padding: var(--space-16) var(--space-4); }
+  .info-row { flex-direction: column; gap: 2px; padding: var(--space-4) var(--space-5); }
+  .info-row dd { text-align: left; }
+}
+</style>

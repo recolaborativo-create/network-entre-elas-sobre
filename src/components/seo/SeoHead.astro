@@ -1,0 +1,61 @@
+---
+import { safeJson } from '../../utils/safe-json'
+import { event } from '../../data/event'
+
+interface Props {
+  title: string
+  description: string
+  ogImage?: string
+}
+const { title, description, ogImage = '/og-preview.jpg' } = Astro.props
+
+const SITE_URL = 'https://networkentreelas-sobre.vercel.app'
+const ogImageAbs = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`
+
+const eventSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: event.name,
+  description: event.description,
+  ...(event.startDate ? { startDate: event.startDate } : {}),
+  ...(event.endDate ? { endDate: event.endDate } : {}),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  isAccessibleForFree: event.isFree,
+  location: {
+    '@type': 'Place',
+    name: event.locationName,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: event.locationCity,
+      addressRegion: 'RS',
+      addressCountry: 'BR',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'REC Colaborativo',
+    url: 'https://somosrecoficial.com.br',
+  },
+  image: [ogImageAbs],
+}
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={SITE_URL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageAbs} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content={SITE_URL} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:site_name" content="REC Colaborativo" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageAbs} />
+<link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
+
+<script type="application/ld+json" set:html={safeJson(eventSchema)} />

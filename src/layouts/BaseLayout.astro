@@ -1,0 +1,42 @@
+---
+import '../styles/globals.css'
+import SeoHead from '../components/seo/SeoHead.astro'
+
+interface Props {
+  title: string
+  description: string
+  ogImage?: string
+}
+const { title, description, ogImage } = Astro.props
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <SeoHead {title} {description} {ogImage} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<script>
+  import { initReveal } from '../utils/reveal'
+
+  // Sempre abre do topo, mesmo que a URL carregue com uma âncora
+  // (ex: alguém compartilha o link depois de já ter clicado em "Quero garantir minha vaga").
+  // Só forçar o scroll não basta: o navegador reaplica o scroll até a âncora conforme
+  // fontes/imagens terminam de carregar e o layout muda. Removendo o hash da URL de cara,
+  // não sobra âncora nenhuma pra ele "corrigir" de volta.
+  if (location.hash) {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+    history.replaceState(null, '', location.pathname + location.search)
+    window.scrollTo(0, 0)
+  }
+
+  initReveal()
+</script>

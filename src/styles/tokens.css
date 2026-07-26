@@ -1,0 +1,105 @@
+:root {
+  /* ===== Brand colors — REC ===== */
+  --rec-blue: #012659;
+  --rec-blue-2: #02377A;
+  --rec-teal: #00a198;
+  --rec-teal-soft: #B8E0DD;
+  --rec-white: #FFFFFF;
+  --rec-cream: #F4EFE6;
+  --rec-ink: #0E1116;
+
+  /* Superfícies */
+  --surface:        #FFFFFF;
+  --surface-2:      #F4EFE6;
+  --surface-3:      #fafcfe;
+  --surface-raised: #FFFFFF;
+  --surface-inverse:#012659;
+
+  /* Texto */
+  --text:        #012659;
+  --text-strong: #012659;
+  --text-muted:  rgba(1,38,89,0.65);
+  --text-soft:   rgba(1,38,89,0.45);
+  --text-on-accent: #FFFFFF;
+  --text-on-inverse: #FFFFFF;
+
+  /* Bordas */
+  --border:       rgba(37,52,57,0.10);
+  --border-soft:  rgba(1,38,89,0.08);
+  --border-strong:rgba(1,38,89,0.15);
+
+  /* Acento */
+  --accent:        #00a198;
+  --accent-strong: #008b83;
+  --accent-soft:   #B8E0DD;
+  --accent-tint:   rgba(0,161,152,0.08);
+  --brand:         #012659;
+  --brand-2:       #02377A;
+
+  /* Sombras */
+  --shadow-sm: 0 3px 8px rgba(62,64,149,0.08);
+  --shadow-md: 0 8px 20px rgba(62,64,149,0.22);
+  --shadow-lg: 0 8px 28px rgba(0,161,152,0.25);
+
+  /* Gradients */
+  --grad-soft-teal: linear-gradient(135deg, #fff 0%, #fff 55%, rgba(0,161,152,0.08) 100%);
+  --grad-hero-teal: linear-gradient(135deg, #012659 0%, #02377A 55%, #00a198 110%);
+  --grad-footer: linear-gradient(135deg, #012659 0%, #0E1116 100%);
+
+  /* Tipografia — Fraunces (display), Space Grotesk (UI/acento), Manrope (corpo) */
+  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-ui: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+
+  --type-display: clamp(2rem, 5.5vw, 3.4rem);
+  --type-h1:      clamp(1.6rem, 4vw, 2.2rem);
+  --type-h2:      clamp(1.25rem, 3vw, 1.6rem);
+  --type-h3:      clamp(1.05rem, 2.2vw, 1.25rem);
+  --type-body:    clamp(0.95rem, 1.4vw, 1.05rem);
+  --type-small:   clamp(0.8rem, 1.1vw, 0.9rem);
+  --type-micro:   clamp(0.68rem, 0.9vw, 0.75rem);
+
+  --letter-tight: -0.02em;
+  --letter-uppercase: 0.18em;
+
+  /* Motion */
+  --motion-fast: 200ms;
+  --motion-medium: 400ms;
+  --motion-slow: 800ms;
+  --easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-reading: 680px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  --bp-mobile: 640px;
+  --bp-tablet: 1024px;
+  --bp-desktop: 1280px;
+
+  /* iOS Safari fix — usar --vh-full em vez de 100vh */
+  --vh-full: 100vh;
+  --vh-full: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 1ms;
+    --motion-medium: 1ms;
+    --motion-slow: 1ms;
+  }
+}

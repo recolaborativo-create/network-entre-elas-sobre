@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://networkentreelas.somosrecoficial.com.br/sitemap-index.xml
